@@ -32,9 +32,14 @@ class TestIPAddress extends FunSuite with SparkSessionTestWrapper{
         assert(ip.toString === "192.168.0.1")
     }
 
-    test("mask - valid mask") {
+    test("mask - valid mask 1") {
         var ip = IPAddress("192.168.0.1").mask("255.0.0.0").get
         assert(ip.toString === "192.0.0.0")
+    }
+
+    test("mask - valid mask 2") {
+        var ip = IPAddress("192.168.0.1").mask("255.255.0.0").get
+        assert(ip.toString === "192.168.0.0")
     }
 
     test("mask - invalid mask") {
