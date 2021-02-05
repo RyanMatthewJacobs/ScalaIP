@@ -2,20 +2,36 @@ package com.databricks115
 
 import org.apache.spark.sql.types.DataType
 
-class IPAddress (addr: String) extends DataType with Equals {
+trait IPValidator {
+    val IPv4 = """(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})""".r
     
-    private val IPv4 = """(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})""".r
+    def isIP(ip: Long): Boolean = ip >= 0L && ip <= 4294967295L
 
-    val addrL: Long = addr.split("\\.").reverse.zipWithIndex.map(a => a._1.toInt * math.pow(256, a._2).toLong).sum
-    require(addrL >= 0L, "The address must be >= 0.0.0.0.")
-    require(addrL <= 4294967295L, "The address must be <= 255.255.255.255.")
-    
-    def isIP: Boolean = {
-        addr match {
+    def isIP(ip: String): Boolean = {
+        ip match {
             case IPv4(o1, o2, o3, o4) => {
                 return List(o1, o2, o3, o4).map(_.toInt).filter(x => x < 0 || x > 255).isEmpty
             }
             case _ => false
+        }
+    }
+}
+
+class IPAddress private (addrL: Long) extends DataType with Equals with IPValidator {
+    
+    require(addrL >= 0L, "The address must be >= 0.0.0.0.")
+    require(addrL <= 4294967295L, "The address must be <= 255.255.255.255.")
+
+    def isIP: Boolean = isIP(addrL)
+
+    // Return network address of IP address
+    def mask(maskIP: String): Option[IPAddress] = convertIPStringToLong(maskIP).map(x => new IPAddress(addrL & x))
+
+    private def convertIPStringToLong(ip: String): Option[Long] = {
+        if (isIP(ip)) {
+            return Some(ip.split("\\.").reverse.zipWithIndex.map(a => a._1.toInt * math.pow(256, a._2).toLong).sum)
+        } else {
+            return None
         }
     }
 
@@ -58,9 +74,10 @@ class IPAddress (addr: String) extends DataType with Equals {
         return 1;
     }
     
-    override def toString(): String = {
-        return addr;
-    }
+    override def toString(): String = List(0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000)
+                                        .zip(List(0,8,16,24))
+                                        .map(mi => ((mi._1 & addrL) >> mi._2)).reverse
+                                        .map(_.toString).mkString(".");
     
     override def canEqual(that: Any): Boolean = that.isInstanceOf[IPAddress]
     
@@ -79,5 +96,19 @@ class IPAddress (addr: String) extends DataType with Equals {
       case _ =>
         false
     }
-    override def hashCode() = addr.hashCode()
+    override def hashCode() = addrL.hashCode()
+}
+
+object IPAddress extends IPValidator{
+    def apply(addrStr: String) = new IPAddress(convertIPStringToLong(addrStr))
+    def apply(addrLong: Long) = new IPAddress(addrLong)
+
+    // I don't like reusing this code from above... change soon
+    private def convertIPStringToLong(addrStr: String): Long = {
+        if (isIP(addrStr)) {
+            return addrStr.split("\\.").reverse.zipWithIndex.map(a => a._1.toInt * math.pow(256, a._2).toLong).sum
+        } else {
+            throw new InvalidIPException("Invalid IP")
+        }
+    }
 }
