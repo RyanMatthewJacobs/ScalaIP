@@ -167,8 +167,8 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
   }
   
   lazy val isReserved: Boolean = {
-    isUnspecified || isLoopback || isIPv4Mapped || isIPv4Translated || isIPv4IPv6Translated || isTeredo ||
-      is6to4 || isUniqueLocal || isLinkLocal || isMulticast || isPrivate
+    // isUnspecified || isLoopback || isIPv4Mapped || isIPv4Translated || isIPv4IPv6Translated || isTeredo ||
+    //   is6to4 || isUniqueLocal || isLinkLocal || isMulticast || isPrivate
     addrNum match {
       case Left(value) =>
         (value >= 0L && value <= 16777215L) ||
@@ -235,7 +235,7 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
     }
   }
   
-  def IPv4Mapped: IPAddress = {
+  def ipv4Mapped: IPAddress = {
     addrNum match {
       case Left(_) => IPAddress(s"::ffff:${IPv4to2IPv6Octets(this)}")
       case Right(_) =>
