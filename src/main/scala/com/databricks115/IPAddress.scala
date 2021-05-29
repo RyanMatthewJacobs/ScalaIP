@@ -1,4 +1,4 @@
-package com.SparkIP
+package com.databricks115
 
 case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
   // IP as a number

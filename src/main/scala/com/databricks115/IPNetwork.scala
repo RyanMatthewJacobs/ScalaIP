@@ -1,4 +1,4 @@
-package com.SparkIP
+package com.databricks115
 
 case class IPNetwork(network: String) extends IPTraits with Ordered[IPNetwork]{
   // If input is in range format
