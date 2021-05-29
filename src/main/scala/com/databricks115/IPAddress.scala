@@ -212,7 +212,7 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
   // IPv4 IPv6 interface functions
   private def IPv4to2IPv6Octets(ip: IPAddress): String =
     s"${(ip.addrNum.left.get >> 16 & 0xFFFF).toHexString}:${(ip.addrNum.left.get & 0xFFFF).toHexString}"
-    private def IPv6OctetsToIPv4(octets: String): IPAddress = {
+  private def IPv6OctetsToIPv4(octets: String): IPAddress = {
     val octet: String = octets.filter(_!=':')
     numToIP(Integer.parseInt(octet, 16))
   }
@@ -228,12 +228,12 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
     }
   }
   
-  def sixToFour(subnet: String, interfaceID: String): IPAddress = {
-    addrNum match {
-      case Left(_) => IPAddress(s"2002:${IPv4to2IPv6Octets(this)}:$subnet:$interfaceID")
-      case Right(_) => null
-    }
-  }
+//  def sixToFour(subnet: String, interfaceID: String): IPAddress = {
+//    addrNum match {
+//      case Left(_) => IPAddress(s"2002:${IPv4to2IPv6Octets(this)}:$subnet:$interfaceID")
+//      case Right(_) => null
+//    }
+//  }
   
   def ipv4Mapped: IPAddress = {
     addrNum match {
@@ -279,21 +279,21 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
     }
   }
   
-  def teredo(flags: String, udpPort: String, clientIPv4: String): IPAddress = {
-    addrNum match {
-      case Left(_) => IPAddress(s"2001:0:${IPv4to2IPv6Octets(this)}:$flags:$udpPort:$clientIPv4")
-      case Right(_) => null
-    }
-  }
+//  def teredo(flags: String, udpPort: String, clientIPv4: String): IPAddress = {
+//    addrNum match {
+//      case Left(_) => IPAddress(s"2001:0:${IPv4to2IPv6Octets(this)}:$flags:$udpPort:$clientIPv4")
+//      case Right(_) => null
+//    }
+//  }
   
-  def teredo(flags: String, udpPort: String, clientIPv4: IPAddress): IPAddress = {
-    def IPv4XorTo2IPv6Octets: String = {
-      val xord = BigInt(s"${IPv4ToLong(clientIPv4.addr)}") ^ 4294967295L
-      s"${(xord >> 16).toString(16)}:${(xord & 65535).toString(16)}"
-    }
-    addrNum match {
-      case Left(_) => IPAddress(s"2001:0:${IPv4to2IPv6Octets(this)}:$flags:$udpPort:$IPv4XorTo2IPv6Octets")
-      case Right(_) => null
-    }
-  }
+//  def teredo(flags: String, udpPort: String, clientIPv4: IPAddress): IPAddress = {
+//    def IPv4XorTo2IPv6Octets: String = {
+//      val xord = BigInt(s"${IPv4ToLong(clientIPv4.addr)}") ^ 4294967295L
+//      s"${(xord >> 16).toString(16)}:${(xord & 65535).toString(16)}"
+//    }
+//    addrNum match {
+//      case Left(_) => IPAddress(s"2001:0:${IPv4to2IPv6Octets(this)}:$flags:$udpPort:$IPv4XorTo2IPv6Octets")
+//      case Right(_) => null
+//    }
+//  }
 }
