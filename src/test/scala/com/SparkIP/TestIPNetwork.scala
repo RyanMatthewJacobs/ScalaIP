@@ -1,4 +1,5 @@
-package com.databricks115
+package com.SparkIP
+import com.SparkIP.IPNetwork
 import org.scalatest.FunSuite
 
 class TestIPNetwork extends FunSuite {
