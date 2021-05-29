@@ -80,31 +80,47 @@ v6Net.version // 6
 ### IPSet
 ```scala
 // Create an IPSet
-val set1 = IPSet("::", IPAddress("2.0.0.0"), IPNetwork("::/16"), Set("2::", "3::"))
-val set2 = IPSet()
+val ipSet = IPSet()
 
-// Get the length of the set
+// Add
+ipSet.add("0.0.0.0", "::/16")
 
-// Compare sets
+// Remove
+ipSet.remove("::/16")
 
-// Add elements
+// Contains
+ipSet.contains("0.0.0.0")
 
-// Remove elements
+// Clear
+ipSet.clear()
 
-// Check if the set contains an IPAddress or IPNetwork
+// Show all
+ipSet.showAll()
 
-// Clear the set
+// Union
+val ipSet2 = ("2001::", "::33", "ffff::f")
+ipSet.union(ipSet2)
 
-// Show all addresses and networks
+// Intersection
+ipSet.intersects(ipSet2)
 
-// Return all elements
+// Diff
+ipSet.diff(ipSet2)
 
-// Check if its empty
+// Show All
+ipSet.showAll()
 
-// Get the intersection with another set
+// Return All
+ipSet.returnAll()
 
-// Get the union with another set
+// Is empty
+ipSet.isEmpty()
 
-// Get the diff with another set
+// Compare IPSets
+ipSet2 = ("2001::", "::33", "ffff::f")
+ipSet == ipSet2
+ipSet != ipSet2
 
+// Return the # of elements in the set
+ipSet.length
 ```
