@@ -284,20 +284,20 @@ class TestIPAddress extends FunSuite {
     val ip = IPAddress("192.158.0.1")
     assert(ip.teredo == IPAddress("2001:0:c09e:0001::"))
   }
-
-  test("teredo params 1") {
-    val ip = IPAddress("192.158.0.1")
-    val flags = "eb"
-    val udpPort = "cc"
-    val clientIPv4 = "3fff:fdd2"
-    assert(ip.teredo(flags, udpPort, clientIPv4) == IPAddress("2001:0:c09e:0001:eb:cc:3fff:fdd2"))
-  }
-
-  test("teredo params 2") {
-    val ip = IPAddress("192.158.0.1")
-    val flags = "eb"
-    val udpPort = "cc"
-    val clientIPv4 = IPAddress("192.0.2.45")
-    assert(ip.teredo(flags, udpPort, clientIPv4) == IPAddress("2001:0:c09e:0001:eb:cc:3fff:fdd2"))
-  }
+//
+//  test("teredo params 1") {
+//    val ip = IPAddress("192.158.0.1")
+//    val flags = "eb"
+//    val udpPort = "cc"
+//    val clientIPv4 = "3fff:fdd2"
+//    assert(ip.teredo(flags, udpPort, clientIPv4) == IPAddress("2001:0:c09e:0001:eb:cc:3fff:fdd2"))
+//  }
+//
+//  test("teredo params 2") {
+//    val ip = IPAddress("192.158.0.1")
+//    val flags = "eb"
+//    val udpPort = "cc"
+//    val clientIPv4 = IPAddress("192.0.2.45")
+//    assert(ip.teredo(flags, udpPort, clientIPv4) == IPAddress("2001:0:c09e:0001:eb:cc:3fff:fdd2"))
+//  }
 }
