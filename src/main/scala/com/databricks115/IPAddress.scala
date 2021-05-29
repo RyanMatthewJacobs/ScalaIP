@@ -3,6 +3,7 @@ package com.databricks115
 case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
   // IP as a number
   val addrNum: Either[Long, BigInt] = IPToNum(addr)
+
   val version: Int = addrNum match {
     case Left(_) => 4
     case Right(_) => 6
@@ -167,10 +168,10 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
   }
   
   lazy val isReserved: Boolean = {
-    // isUnspecified || isLoopback || isIPv4Mapped || isIPv4Translated || isIPv4IPv6Translated || isTeredo ||
-    //   is6to4 || isUniqueLocal || isLinkLocal || isMulticast || isPrivate
     addrNum match {
       case Left(value) =>
+        isUnspecified || isLoopback || isIPv4Mapped || isIPv4Translated || isIPv4IPv6Translated || isTeredo ||
+          is6to4 || isUniqueLocal || isLinkLocal || isMulticast || isPrivate ||
         (value >= 0L && value <= 16777215L) ||
           (value >= 1681915904L && value <= 1686110207L) ||
           (value >= 3221225472L && value <= 3221225727L) ||
@@ -182,6 +183,8 @@ case class IPAddress(addr: String) extends IPTraits with Ordered[IPAddress] {
           (value >= 4026531840L && value <= 4294967294L) ||
           (value == 4294967295L)
       case Right(value) =>
+        isUnspecified || isLoopback || isIPv4Mapped || isIPv4Translated || isIPv4IPv6Translated || isTeredo ||
+          is6to4 || isUniqueLocal || isLinkLocal || isMulticast || isPrivate ||
         (value >= BigInt("1329227995784915872903807060280344576") && value <= BigInt("1329227995784915891350551133989896191")) ||
           (value >= BigInt("42540490697277043217009159418706657280") && value <= BigInt("42540491964927643445238560915409862655")) ||
           (value >= BigInt("42540766411282592856903984951653826560") && value <= BigInt("42540766490510755371168322545197776895"))

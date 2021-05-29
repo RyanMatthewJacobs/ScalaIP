@@ -250,6 +250,8 @@ class TestIPAddress extends FunSuite {
 
   test("isReserved - true") {
     val ip = IPAddress("255.0.0.5")
+    val ip2 = IPAddress("2001::")
+    assert(ip2.isReserved)
     assert(ip.isReserved)
   }
 
@@ -278,6 +280,9 @@ class TestIPAddress extends FunSuite {
    test("teredoClient") {
     val ip = IPAddress("2001:0:c000:201::")
     assert(ip.teredoClient == IPAddress("255.255.255.255"))
+
+     val v4Net = IPNetwork("192.0.0.0/16")
+     val v6Net = IPNetwork("100::/16")
   }
 
   test("teredo") {
