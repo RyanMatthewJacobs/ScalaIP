@@ -1,4 +1,4 @@
-package com.databricks115
+package com.ScalaIP
 
 trait IPv4Traits {
     protected def IPv4SubnetToCIDR(subnet: String): Int = {
