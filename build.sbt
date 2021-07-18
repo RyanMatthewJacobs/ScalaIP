@@ -1,7 +1,7 @@
 name := "ScalaIP"
 // used as `groupId`
 organization := "io.github.jshalaby510"
-version := "1.2"
+version := "1.3"
 
 crossScalaVersions := Seq("2.11.12", "2.13.6", "2.12.14", "3.0.0")
 scalaVersion := crossScalaVersions.value.head
@@ -18,9 +18,9 @@ sonatypeCredentialHost := "s01.oss.sonatype.org"
 // publish to the sonatype repository
 publishTo := sonatypePublishToBundle.value
 
-libraryDependencies += "com.github.mrpowers" %% "spark-daria" % "0.38.2"
-libraryDependencies += "com.github.mrpowers" %% "spark-fast-tests" % "0.21.3" % "test"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+//libraryDependencies += "com.github.mrpowers" %% "spark-daria" % "0.38.2"
+//libraryDependencies += "com.github.mrpowers" %% "spark-fast-tests" % "0.21.3" % "test"
+//libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 // test suite settings
 fork in Test := true
 javaOptions ++= Seq("-Xms512M", "-Xmx2048M", "-XX:MaxPermSize=2048M")
