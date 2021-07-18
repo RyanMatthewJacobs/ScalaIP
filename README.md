@@ -5,7 +5,7 @@ IPv4/IPv6 manipulation library for Scala.
 
 ## Usage
 Add the following to your build.sbt:<br/>
-```libraryDependencies += "io.github.jshalaby510" %% "scalaip" % "1.1"```
+```libraryDependencies += "io.github.jshalaby510" %% "scalaip" % "1.2"```
 <br/>
 Import into a Scala file:<br/>
 ```import com.ScalaIP._```
