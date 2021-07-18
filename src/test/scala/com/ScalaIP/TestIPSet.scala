@@ -1,4 +1,4 @@
-package com.databricks115
+package com.ScalaIP
 import org.scalatest.FunSuite
 
 class TestIPSet extends FunSuite {

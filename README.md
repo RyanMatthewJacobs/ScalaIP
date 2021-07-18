@@ -4,7 +4,11 @@
 IPv4/IPv6 manipulation library for Scala.
 
 ## Usage
-(Our installation stuff)
+Add the following to your build.sbt:<br/>
+```libraryDependencies += "io.github.jshalaby510" %% "scalaip" % "1.2"```
+<br/>
+Import into a Scala file:<br/>
+```import com.ScalaIP._```
 
 ## License
 This project is licensed under the Apache License. Please see [LICENSE](LICENSE) file for more details.
@@ -61,21 +65,29 @@ v4Net.version // 4
 v6Net.version // 6
 
 // Get the range
+v4Net.range // IPAddress(192.0.0.0)-IPAddress(192.0.255.255)
 
 // Get the numerical value (network address and broadcast address)
+v4Net.addrNumStart // Left(3221225472)
+v4Net.addrNumEnd // Left(3221291007)
 
 // Get the network address
+v4Net.networkAddress // IPAddress(192.0.0.0)
 
 // Get the broadcast address
+v4Net.broadcastAddress // IPAddress(192.0.255.255)
 
 // Compare networks
+v4Net < v6Net // true
 
 // Check if 2 networks intersect
+v4Net.netsIntersect(v6Net) // false
 
 // Sort networks
+Seq(v4Net, v6Net, v6Net2, v4Net3).sorted // List(IPNetwork(192.0.0.0/16), IPNetwork(192.0.0.0-255.255.0.0), IPNetwork(100::/16), IPNetwork(100::-2001::))
 
 // Check if a network contains an IPAddress
-
+v4Net.contains("192.0.0.5") // true
 ```
 ### IPSet
 ```scala
